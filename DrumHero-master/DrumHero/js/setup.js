@@ -4,6 +4,7 @@ var points  = 0;
 var health = 180;
 var go = false;
 var finalSong = [];
+var played = [];
 
 
 /*
@@ -32,7 +33,8 @@ draw draws the moving notes as well as the frets and health bar
 function draw(){
     background(200);
     for(var i = 0; i < song.length; i++){
-      finalSong[i].show();
+      if(i < finalSong.length)finalSong[i].show();
+      if(played.length != 0 && i < played.length)played[i].show();
     }
     for(var i = 0; i < frets.length; i++){
       frets[i].show();
@@ -96,7 +98,7 @@ function healthBar(){
     window.location.href = "home.html";
   }
   document.getElementById('score').innerHTML = "Score: " + points;
-  document.getElementById('health').innerHTML = "Health: " + map(health,0,180,0,100) + "%";
+  document.getElementById('health').innerHTML = "Health: " + Math.round(map(health,0,180,0,100)) + "%";
 };
 
 /*
@@ -107,25 +109,36 @@ function keyPressed(key){
     frets[0].pressed = true;
     for(var i = 0; i < finalSong.length-1; i++){
       if(finalSong[i].checkPress(frets[0]))points++;
-      console.log(finalSong[i]);
+      else health--;
     }
   }
   if(keyCode == 68){
     frets[1].pressed = true;
-    for(var i = 0; i < finalSong.length; i++)
-      if(finalSong[i].checkPress(frets[1]))points++;
+    for(var i = 0; i < finalSong.length-1; i++){
+      if(finalSong[i].checkPress(frets[0]))points++;
+      else health--;
+    }
   }
   if(keyCode == 75){
     frets[2].pressed = true;
-    for(var i = 0; i < finalSong.length; i++)finalSong[i].checkPress(frets[2])
+    for(var i = 0; i < finalSong.length-1; i++){
+      if(finalSong[i].checkPress(frets[0]))points++;
+      else health--;
+    }
   }
   if(keyCode == 76){
     frets[3].pressed = true;
-    for(var i = 0; i < finalSong.length; i++)finalSong[i].checkPress(frets[3])
+    for(var i = 0; i < finalSong.length-1; i++){
+      if(finalSong[i].checkPress(frets[0]))points++;
+      else health--;
+    }
   }
   if(keyCode == 32){
     frets[4].pressed = true;
-    for(var i = 0; i < finalSong.length; i++)finalSong[i].checkPress(frets[4])
+    for(var i = 0; i < finalSong.length-1; i++){
+      if(finalSong[i].checkPress(frets[4]))points++;
+      else health--;
+    }
   }
 }
 
@@ -138,4 +151,12 @@ function keyReleased(key){
   if(keyCode == 75)frets[2].pressed = false;
   if(keyCode == 76)frets[3].pressed = false;
   if(keyCode == 32)frets[4].pressed = false;
+}
+
+function lowSearch(){
+  var low = finalSong[0];
+  for(var i = 1; i < finalSong.length; i++){
+    if(finalSong[i].hit == false && finalSong[i].missed == false && finalSong[i].color == 'green')low = finalSong[i];
+  }
+  console.log(low);
 }
