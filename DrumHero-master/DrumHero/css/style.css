@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 5em;
+  margin: 3em;
+}
+
+a {
+  font-size: 1em;
+  background-color: #34aff4;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+nav a:hover,
+nav a:focus{
+  color:#777777;
+}
